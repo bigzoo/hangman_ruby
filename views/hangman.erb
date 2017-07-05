@@ -1,0 +1,6 @@
+<h1><%=@word%></h1>
+<% @alphabet.each() do |letter|%>
+  <a href='/hangman/<%=letter%>'><%=letter%></a>
+<%end%>
+ <p id="selected"><%=@selected_letters%></p>
+ <p><%=@status%></p>
