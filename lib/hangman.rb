@@ -15,6 +15,7 @@ end
 
 class Letter
   @@selected_letters = String.new()
+  @@failure_count = 0
 
   define_method(:initialize) do |letter|
     @letter = letter
@@ -34,5 +35,13 @@ class Letter
 
   define_method(:has_letter) do |letter|
     @@selected_letters.include?(letter)
+  end
+
+  define_singleton_method(:new_fail) do
+    @@failure_count += 1
+  end
+
+  define_singleton_method(:failure_count)do
+    @@failure_count
   end
 end

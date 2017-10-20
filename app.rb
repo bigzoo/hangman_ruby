@@ -18,14 +18,23 @@ get ('/hangman/:letter') do
   letter = params.fetch('letter')
   @word = Word.word()
   word = Word.new(@word)
-  if word.has_letter(letter)
-    @status = "The letter was found"
-    Letter.new(letter).add_letter(letter)
+  @selected_letters = Letter.all()
+  if word.has_letter(letter) && !@selected_letters.include?(letter)
+    no = @word.to_s.count(letter)
+    no.times() do
+      Letter.new(letter).add_letter(letter)
+      @status = "1The letter was found Failure Count remains = " + Letter.failure_count().to_s
+      @selected_letters = Letter.all()
+    end
+  elsif word.has_letter(letter)
+    @no = @word.to_s.count(letter)
     @selected_letters = Letter.all()
+    @status = "The letter was found Failure Count remains = " + Letter.failure_count().to_s
   else
-    @status = "The letter was not found")
+    @no = @word.to_s.count(letter)
+    Letter.new_fail()
     @selected_letters = Letter.all()
+    @status = "The letter was not found. Failure Count = " + Letter.failure_count().to_s
   end
-
   erb(:hangman)
 end
